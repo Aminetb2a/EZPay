@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.1</version>
+	</parent>
+
+	<packaging>pom</packaging>
+	<name>microservices</name>
+	<groupId>ezpay.io</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>microservices</artifactId>
+	<description>EZPay Microservices </description>
+
+	<properties>
+		<java.version>20</java.version>
+		<app.version>0.0.1-SNAPSHOT</app.version>
+		<spring-cloud.version>2022.0.3</spring-cloud.version>
+		<maven.complier.source>${java.version}</maven.complier.source>
+		<maven.complier.target>${java.version}</maven.complier.target>
+	</properties>
+
+	<modules>
+        <module>security-common</module>
+        <module>discovery</module>
+        <module>security</module>
+        <module>gateway</module>
+    </modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
