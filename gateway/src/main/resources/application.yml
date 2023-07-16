@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth
+          uri: lb://AUTH
+          predicates:
+            - Path=/auth/**
+
+#        - id: app
+#          uri: lb://APP
+#          predicates:
+#            - Path=/api/**
+#          filters:
+#            - AuthFilter
+
+  application:
+    name: GATEWAY
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
