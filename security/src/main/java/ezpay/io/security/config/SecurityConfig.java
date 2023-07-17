@@ -20,7 +20,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/auth/register", "/auth/token", "/auth/validate").permitAll())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/auth/register", "/auth/token", "/auth/validate", "/auth/refresh/token").permitAll())
                 .authenticationProvider(mAuthConfig.authenticationProvider())
                 .build();
     }

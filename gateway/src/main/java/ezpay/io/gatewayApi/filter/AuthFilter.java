@@ -25,12 +25,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             if (routeValidator.isSecured.test(exchange.getRequest())) {
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION))
                     throw new RuntimeException("Missing Authorization header");
-                String auth = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-                if (auth != null && auth.startsWith("Bearer"))
-                    auth = auth.substring(7);
+                String token = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+                if (token != null && token.startsWith("Bearer"))
+                    token = token.substring(7);
                 try {
-                    mJwtService.validateToken(auth);
-                    request = exchange.getRequest().mutate().header("username", mJwtService.extractUsername(auth)).build();
+                    mJwtService.validateToken(token);
+                    request = exchange.getRequest().mutate().header("email", mJwtService.extractUserEmail(token)).build();
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new RuntimeException("Unauthorized access, please check your token.");

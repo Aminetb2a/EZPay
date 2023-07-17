@@ -29,7 +29,8 @@ public class AuthService {
         return mJwtService.validateToken(token);
     }
     
-    public String generateToken(String username) {
-        return mJwtService.generateToken(username);
+    public String generateToken(String email) {
+        return mJwtService.generateToken(email);
     }
+    
 }
