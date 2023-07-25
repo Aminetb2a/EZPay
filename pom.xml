@@ -24,11 +24,12 @@
 	</properties>
 
 	<modules>
-        <module>security-common</module>
-        <module>discovery</module>
-        <module>security</module>
-        <module>gateway</module>
-    </modules>
+		<module>common</module>
+		<module>security-common</module>
+		<module>discovery</module>
+		<module>security</module>
+		<module>gateway</module>
+	</modules>
 
 	<build>
 		<pluginManagement>
