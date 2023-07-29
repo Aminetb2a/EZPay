@@ -1,11 +1,16 @@
 eureka:
+  instance:
+    hostname: localhost
   client:
-    register-with-eureka: false
     fetch-register: false
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 spring:
-  application:
-    name: DISCOVERY
+  output:
+    ansi:
+      enabled: always
 
 server:
   port: 8761

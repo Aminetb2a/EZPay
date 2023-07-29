@@ -1,4 +1,7 @@
 spring:
+  output:
+    ansi:
+      enabled: always
   application:
     name: GATEWAY
   cloud:
@@ -11,11 +14,14 @@ spring:
           uri: lb://SECURITY
           predicates:
             - Path=/auth/**
+          filters:
+            - AuthFilter
+            - RewritePath=/auth/(?<path>.*), /$\{path}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://localhost:8761/eureka/
 
 server:
   port: 8080
