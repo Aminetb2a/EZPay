@@ -16,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class JwtService {
     
-    private final JwtProperties mJwtProperties;
+    private final int JWT_EXPIRATION_MS = 86400000;
+    private final String JWT_SECRETKEY = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJbhPfLN8a4ZtGhYeOYmrnCaoytyozeSd9Lc9fnKo0+H4JWLOJYMpoNS4xMLiDg6DtysXi199hldzQTn3/wli5MCAwEAAQ==";
+    
     
     public String extractUserEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -31,7 +33,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
     
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignKey())
@@ -59,12 +61,12 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + mJwtProperties.getJwtExpirationMs()))
-                .signWith(SignatureAlgorithm.HS256, getSignKey()).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_MS))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
     
     private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(mJwtProperties.getJwtSecret());
+        byte[] keyBytes = Decoders.BASE64.decode(JWT_SECRETKEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
     

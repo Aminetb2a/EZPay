@@ -1,23 +1,25 @@
 package ezpay.io.gatewayApi.filter;
 
-import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.*;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.*;
+import org.springframework.http.server.reactive.*;
 import org.springframework.stereotype.Component;
 import ezpay.io.securitycommon.utils.JwtService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
-    
-    private final JwtService mJwtService;
+
+    private final JwtService jwtService;
     private final RouteValidator routeValidator;
     public AuthFilter(JwtService aJwtService, RouteValidator aRouteValidator) {
         super(Config.class);
-        mJwtService = aJwtService;
+        jwtService = aJwtService;
         routeValidator = aRouteValidator;
     }
-    
+
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
@@ -29,8 +31,8 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 if (token != null && token.startsWith("Bearer"))
                     token = token.substring(7);
                 try {
-                    mJwtService.validateToken(token);
-                    request = exchange.getRequest().mutate().header("email", mJwtService.extractUserEmail(token)).build();
+                    jwtService.validateToken(token);
+                    request = exchange.getRequest().mutate().header("email", jwtService.extractUserEmail(token)).build();
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new RuntimeException("Unauthorized access, please check your token.");
@@ -39,8 +41,6 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             return chain.filter(exchange.mutate().request(request).build());
         });
     }
-    
-    public static class Config {
-    
-    }
+
+    public static class Config {}
 }
