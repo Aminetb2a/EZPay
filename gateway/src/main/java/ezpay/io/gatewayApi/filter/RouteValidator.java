@@ -11,8 +11,22 @@ public class RouteValidator {
     public static final List<String> openEndpoints =  List.of(
             "/eureka",
             "/auth/token",
-            "/auth/register"
-    );
+            "/auth/register",
+            "/actuator/*",
+            "/webjars/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/swagger-ui/**",
+            "/api/public/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/configuration/ui",
+            "/swagger-resources",
+            "/auth/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/api/public/authenticate"
+            );
     
     public Predicate<ServerHttpRequest> isSecured =
             request -> openEndpoints

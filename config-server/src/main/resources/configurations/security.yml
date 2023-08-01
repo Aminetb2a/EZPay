@@ -1,3 +1,8 @@
+server:
+  servlet:
+    context-path: /
+  port: 9898
+
 spring:
   output:
     ansi:
@@ -16,6 +21,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+openapi:
+  service:
+    title: Auth Service
+    version: 1.0.0
+    url: http://localhost:8080
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    path: /auth/v3/api-docs
+  swagger-ui:
+    path: /auth/swagger-ui.html
 
 eureka:
   instance:

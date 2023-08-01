@@ -1,22 +1,57 @@
+server:
+  servlet:
+    context-path: /
+  port: 8080
+
 spring:
+  application:
+    name: GATEWAY
   output:
     ansi:
       enabled: always
-  application:
-    name: GATEWAY
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
       routes:
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - AuthFilter
+#            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
         - id: SECURITY
           uri: lb://SECURITY
           predicates:
             - Path=/auth/**
           filters:
             - AuthFilter
-            - RewritePath=/auth/(?<path>.*), /$\{path}
+
+openapi:
+  service:
+    title: gateway doc
+    version: 1.0.0
+    url: http://localhost:8080
+
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+        primaryName: API Gateway Service
+      - url: /auth/v3/api-docs
+        name: Auth Service
+        primaryName: Auth Service
+
 
 eureka:
   client:
