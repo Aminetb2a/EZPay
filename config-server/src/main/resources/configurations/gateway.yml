@@ -35,7 +35,6 @@ openapi:
     version: 1.0.0
     url: http://localhost:8080
 
-
 springdoc:
   enable-native-support: true
   api-docs:
@@ -52,11 +51,15 @@ springdoc:
         name: Auth Service
         primaryName: Auth Service
 
-
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-server:
-  port: 8080
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    zipkin:
+      tracing:
+        endpoint: http://zipkin:9411/api/v2/spans
