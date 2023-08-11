@@ -11,7 +11,7 @@ pipeline{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
                         sh 'chmod +x mvnw'
-                        sh './mvnw sonarqube'
+                        sh 'mvn "-Dsonar.qualitygate=true" sonar:sonar'
                     }
                 }
             }
