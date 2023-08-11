@@ -68,21 +68,29 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.3.2</version>
-				<configuration>
-					<from>
-						<image>eclipse-temurin:20-jre</image>
-					</from>
-					<to>
-						<image>registry.hub.docker.com/aminetb2a/${project.artifactId}</image>
-					</to>
-				</configuration>
-			</plugin>
-		</plugins>
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>com.google.cloud.tools</groupId>-->
+<!--				<artifactId>jib-maven-plugin</artifactId>-->
+<!--				<version>3.3.2</version>-->
+<!--				<configuration>-->
+<!--&lt;!&ndash;					<from>&ndash;&gt;-->
+<!--&lt;!&ndash;						<image>eclipse-temurin:20-jre</image>&ndash;&gt;-->
+<!--&lt;!&ndash;					</from>&ndash;&gt;-->
+<!--					<to>-->
+<!--						<image>registry.hub.docker.com/aminetb2a/${project.artifactId}</image>-->
+<!--					</to>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<goals>-->
+<!--							<goal>dockerBuild</goal>-->
+<!--						</goals>-->
+<!--						<phase>package</phase>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
 	</build>
 
 </project>
