@@ -1,20 +1,23 @@
 pipeline{
     agent any
     tools {
-          maven 'MAVEN_HOME'
-     }
+        maven '3.6.6'
+        jdk 'jdk-20'
+    }
     stages{
+        stage('Build') {
+           steps {
+            sh 'mvn --version'
+            sh 'java --version'
+            sh 'mvn install'
+           }
+        }
         stage("Sonar quality check"){
-            agent{
-                docker{
-                    image 'openjdk:11'
-                }
-            }
+
             steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
-                        sh 'chmod +x mvnw'
-                        sh 'mvn "-Dsonar.qualitygate=true" sonar:sonar'
+                        sh 'cd security && mvn "-Dsonar.qualitygate=true" sonar:sonar'
                     }
                 }
             }
