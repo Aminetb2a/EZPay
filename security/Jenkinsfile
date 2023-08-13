@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment{
+        VERSION = "${env.BUILD_ID}"
+    }
     tools {
         maven '3.6.6'
         jdk 'jdk-20'
@@ -23,6 +26,20 @@ pipeline{
                         if (qg.status != 'OK')
                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
                     }
+                }
+            }
+        }
+        stage("Dockerize"){
+            steps{
+                script{
+                withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_pass'), string(credentialsId: 'docker_username', variable: 'docker_username')]) {
+                       sh '''
+                        docker build -t 35.188.163.151/ezpay-security:${VERSION} .
+                        docker login -u $docker_username -p $docker_password 35.188.163.151:8083
+                        docker push 35.188.163.151/ezpay-security:${VERSION}
+                        docker rmi 35.188.163.151/ezpay-security:${VERSION}
+                        '''
+                }
                 }
             }
         }
